@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Target Solution Project: Detailed Case Study</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f8f8; /* Light background */
+            color: #333333; /* Dark gray text */
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 960px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #ffffff;
+            border-radius: 0.75rem; /* rounded-xl */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1a202c; /* Darker title */
+            margin-bottom: 1.5rem;
+            border-bottom: 3px solid #6b7280; /* Subtle underline */
+            padding-bottom: 0.5rem;
+        }
+        h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #2d3748; /* Slightly lighter heading */
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #e2e8f0; /* Light underline */
+            padding-bottom: 0.5rem;
+        }
+        h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #4a5568; /* Even lighter heading */
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        p {
+            margin-bottom: 1rem;
+        }
+        ul {
+            list-style-type: disc;
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        ol {
+            list-style-type: decimal;
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        .tag {
+            display: inline-block;
+            background-color: #edf2f7; /* Light gray tag background */
+            color: #4a5568; /* Dark gray tag text */
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Salesforce Lightning-like styles for mockups */
+        .sf-record-page {
+            background-color: #f4f6f9; /* Salesforce background color */
+            border-radius: 0.5rem;
+            border: 1px solid #d8dde6;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* Subtle inner shadow */
+            overflow: hidden;
+            height: 100%; /* Fill parent container height */
+        }
+        .sf-header {
+            background-color: #ffffff;
+            padding: 0.7rem 1.05rem;
+            border-bottom: 1px solid #d8dde6;
+            display: flex;
+            align-items: center;
+            gap: 0.525rem;
+        }
+        .sf-header-icon {
+            background-color: #0070d2; /* Blue icon background */
+            color: #ffffff;
+            border-radius: 0.25rem;
+            width: 1.75rem;
+            height: 1.75rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 0.875rem;
+        }
+        .sf-header-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #16325c;
+        }
+        .sf-actions {
+            background-color: #ffffff;
+            padding: 0.7rem 1.05rem;
+            border-bottom: 1px solid #d8dde6;
+            display: flex;
+            gap: 0.35rem;
+            justify-content: flex-start;
+        }
+        .sf-button {
+            background-color: #0070d2;
+            color: white;
+            padding: 0.42rem 0.7rem;
+            border-radius: 0.25rem;
+            font-size: 0.595rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            border: none;
+        }
+        .sf-button:hover {
+            background-color: #005fb2;
+        }
+        .sf-body {
+            padding: 1.05rem;
+            display: grid;
+            grid-template-columns: 1fr; /* Default to 1 column for small screens */
+            gap: 1.05rem;
+        }
+        @media (min-width: 768px) { /* md breakpoint */
+            .sf-body {
+                grid-template-columns: repeat(2, 1fr); /* 2 columns for larger screens */
+            }
+        }
+        .sf-field-group {
+            background-color: #ffffff; /* Fields themselves are white */
+            border-radius: 0.25rem;
+            border: 1px solid #e0e0e0;
+            padding: 0.56rem;
+            text-align: left; /* Ensure text aligns left within field group */
+        }
+        .sf-field-label {
+            font-size: 0.49rem;
+            color: #6a6e73;
+            text-transform: uppercase;
+            margin-bottom: 0.175rem;
+            font-weight: 500;
+        }
+        .sf-field-value {
+            font-size: 0.63rem;
+            color: #181b23;
+            font-weight: 400;
+        }
+        .sf-related-list {
+            background-color: #ffffff;
+            border-top: 1px solid #d8dde6;
+            padding: 0.7rem 1.05rem;
+        }
+        .sf-related-list-title {
+            font-size: 0.77rem;
+            font-weight: 600;
+            color: #16325c;
+            margin-bottom: 0.7rem;
+        }
+
+        /* New styles for Dashboard Widgets */
+        .sf-dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 1.5rem; /* Standard gap for widgets */
+        }
+        @media (min-width: 640px) { /* sm */
+            .sf-dashboard-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (min-width: 1024px) { /* lg */
+            .sf-dashboard-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .sf-dashboard-widget {
+            background-color: #ffffff;
+            border-radius: 0.5rem; /* Slightly less rounded than main container */
+            box-shadow: 0 1px 3px 0 rgba(0,0,0,0.1), 0 1px 2px 0 rgba(0,0,0,0.06); /* Subtle shadow */
+            padding: 1rem;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .sf-dashboard-widget h4 {
+            font-size: 1rem; /* Smaller heading for widgets */
+            font-weight: 600;
+            color: #16325c;
+            margin-bottom: 0.5rem;
+        }
+        .sf-dashboard-widget p {
+            font-size: 0.875rem;
+            color: #6a6e73;
+            margin-bottom: 0; /* Remove default paragraph margin */
+        }
+        .sf-dashboard-widget .metric-value {
+            font-size: 2.5rem; /* Larger for key metrics */
+            font-weight: 700;
+            color: #0070D2; /* Salesforce blue for metric values */
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .sf-dashboard-widget .chart-placeholder {
+            width: 100%;
+            height: 120px; /* Adjusted height for widgets */
+            margin-top: 0.75rem;
+            background-color: #e0e9f4; /* Lighter blue-gray for chart backgrounds */
+            border-radius: 0.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6B7280;
+            font-style: italic;
+            font-size: 0.875rem;
+        }
+        .sf-dashboard-widget .gauge-chart {
+            margin-top: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Styles for Automation Flow Cards */
+        .automation-flow-card {
+            background-color: #ffffff;
+            border-radius: 0.75rem; /* rounded-xl */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center content within card */
+            text-align: center; /* Center text */
+            height: 100%; /* Ensure cards are same height in a row */
+        }
+        .automation-flow-card h3 {
+            font-size: 1.25rem; /* Slightly smaller for card heading */
+            margin-top: 0.5rem;
+            margin-bottom: 0.75rem;
+            color: #2d3748;
+        }
+        .automation-flow-card p {
+            font-size: 0.9rem;
+            color: #4a5568;
+            flex-grow: 1; /* Allows text to take up available space */
+            margin-bottom: 1rem;
+        }
+        .automation-flow-card .flow-diagram-container {
+            width: 100%; /* Ensure container takes full width of card */
+            max-height: 200px; /* Limit height of image for grid consistency */
+            overflow: hidden; /* Hide overflow if image is too tall */
+            display: flex; /* For centering image inside */
+            justify-content: center; /* For centering image inside */
+            align-items: center; /* For centering image inside */
+            margin-top: auto; /* Push image to bottom if content is short */
+        }
+        .automation-flow-card .flow-diagram-container img {
+            max-width: 100%;
+            max-height: 100%; /* Ensure image scales down but not up unnecessarily */
+            object-fit: contain; /* Ensures image aspect ratio is maintained */
+        }
+
+        /* Styles for Object Record Cards */
+        .object-record-card {
+            background-color: #ffffff; /* Card background */
+            border-radius: 0.75rem; /* Reduced border-radius */
+            box-shadow: 0 3.5px 7px -1.75px rgba(0, 0, 0, 0.15), 0 1.75px 3.5px -1.75px rgba(0, 0, 0, 0.08); /* Reduced shadow by 30% */
+            padding: 0.875rem; /* Reduced padding by 30% (was 1.25rem) */
+            display: flex;
+            flex-direction: column;
+            height: 100%; /* Ensure cards are same height in a row */
+        }
+        .object-record-card .sf-record-page {
+            box-shadow: none; /* Remove inner shadow as wrapper has one */
+            border: none; /* Remove inner border as wrapper defines visual boundary */
+            background-color: #f4f6f9; /* Restore Salesforce background for the inner content */
+            height: 100%; /* Ensure inner content fills wrapper */
+        }
+
+        /* Schema Relationship Diagram Container */
+        .schema-diagram-container {
+            background-color: #f0f0f0;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+            margin-bottom: 2rem;
+            overflow-x: auto; /* Enable horizontal scrolling for wide diagrams */
+            text-align: center; /* Center the image if it's smaller than container */
+        }
+        .schema-diagram-container img {
+            max-width: 70%; /* Reduced by 30% (was 100%) */
+            height: auto;
+            display: inline-block; /* Allows centering with text-align */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-2xl font-semibold text-gray-800 mt-8 mb-4">Job Target Solution Project</h1>
+
+        <div class="mb-6">
+            <span class="tag">Salesforce Automation</span>
+            <span class="tag">Data Quality</span>
+            <span class="tag">Reporting & Analytics</span>
+            <span class="tag">User Adoption</span>
+            <span class="tag">Process Optimization</span>
+        </div>
+
+        <h2 class="text-2xl font-semibold text-gray-800 mt-8 mb-4">Business Need Summary</h2>
+        <p>Our organization faced significant data quality issues that hindered core service delivery and critical reporting. The existing process for capturing clients' desired job targets was inconsistent and inaccurate, leading to a disconnect between client aspirations and actual job placement outcomes. This directly impacted our ability to strategically position clients for relevant employment opportunities through our employability initiatives.</p>
+        <p>A critical consequence was our inability to accurately demonstrate the impact of services to government and private funders. Funders require robust metrics to validate that their contributions effectively assist clients in securing desired employment. Without reliable data on desired job targets versus actual job placements, we could not definitively show whether clients were securing roles aligned with their original goals, even when placements occurred. This inaccuracy threatened continued funding and our credibility in achieving our mission.</p>
+
+        <h2 class="text-2xl font-semibold text-gray-800 mt-8 mb-4">Solution Design Summary: Making Job Targets Clear and Actionable</h2>
+        <p>We transformed how we record client job desires, making it much more precise and useful:</p>
+        <ul class="list-disc list-inside space-y-2">
+            <li><strong>Standardizing Job Targets:</strong> To eliminate errors from free-form text entries, we adopted Canada’s National Occupational Classification (NOC) codes as the standard “job target” list. This comprehensive, government-recognized list was cleaned and organized to fit our needs, then uploaded into a dedicated 'Job Target' custom object in Salesforce. Staff now select from a curated dropdown of NOC classifications, ensuring consistency and alignment with reporting requirements.</li>
+            <li><strong>Dedicated Client Job Target Records:</strong> We replaced old text boxes with new "Client Job Target" records. Each time a client identifies a desired job, a specific record is created to track details like when the target was set, its active status, whether the client secured that job, or if goals changed. This significantly improves tracking and reporting.</li>
+            <li><strong>Quickly Adding Multiple Job Targets:</strong> Recognizing clients often have multiple interests, we designed a quick way for staff to select and add multiple desired job targets at once directly from our 'Job Target' list using a simple on-screen wizard in Salesforce. This guide walks staff through choosing relevant job categories and flags one primary target for external reporting, ensuring contractual commitments are met and enabling more efficient data entry.</li>
+            <li><strong>Connecting Goals to Assessments and Funding:</strong> When a client’s job targets are finalized during their initial assessment, the system ensures the primary job target (for funder reporting) is clearly linked to their assessment record, meeting all contractual reporting requirements.</li>
+            <li><strong>Seamless Handoff to Placement Team:</strong> Employment Specialists can instantly see all active job targets for a client, creating a smooth transition and ensuring efforts focus on matching client aspirations. This boosts placement accuracy and cuts administrative effort by over 73%.</li>
+            <li><strong>Real-Time Job Openings:</strong> We created a 'Job Posting' object for our Employment Services Team to record job openings from employer partners. The new system helps specialists quickly see which active client job targets have matching active job openings, making the placement process much more efficient and reducing previous long processes by over 62%.</li>
+        </ul>
+        <p>Behind the scenes, this solution is powered by smart automation like intuitive Screen Flows and modern display features such as Lightning Record Pages to simplify processes for users, while clever data connections (formula fields, Master-detail and Lookup relationships) and built-in checks ensure data consistency, real-time reporting, and seamless integration with existing workflows.</p>
+
+        <h2 class="text-2xl font-semibold text-gray-800 mt-8 mb-4">Automation Summary: Screen Flow</h2>
+        <p class="mb-6">The core automation is driven by a Screen Flow initiated from the Client Account:</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Flow 1: Create Program Schedule Screen Flow -->
+            <div class="automation-flow-card">
+                <h3>1. Create Client Job Target Screen Flow</h3>
+                <p>Triggered via a detail page button "New Client Job Target" on the Client Account, this flow guides the user to select desired job targets from the NOC Code list and creates new "Client Job Target" records. It allows for bulk addition and designates a primary target for reporting.</p>
+                <div class="flow-diagram-container">
+                    <img src="Client Job Target Flow.PNG" alt="Create Program Schedule Screen Flow Diagram">
+                </div>
+            </div>
+
+            <!-- Flow 2: Mark Invoice Paid Screen Flow (Adapted for Job Target) -->
+            <div class="automation-flow-card">
+                <h3>2. Mark Client Job Target as Secured Screen Flow</h3>
+                <p>Initiated from the Client Job Target record, this flow streamlines the process of marking a job target as "Employment Secured." It captures the start date of employment and links to the newly created Placement record, ensuring a seamless transition and accurate reporting of successful placements. When a client secures employment and the relevant Client Job Target is marked 'Employment Secured', all other active job targets for that client have their status field automatically updated to 'cancelled'.</p>
+                <div class="flow-diagram-container">
+                    <img src="Job Target Closure.PNG" alt="Mark Invoice Paid Screen Flow Diagram">
+                </div>
+            </div>
+
+        </div>
+        <p class="mt-6">Note: The provided images are placeholders to illustrate the concept of Screen Flows. Actual flow diagrams would be more detailed.</p>
+
+        <h2 class="text-2xl font-semibold text-gray-800 mt-8 mb-4">Schema Relationship Diagram</h2>
+        <p class="mb-6">The solution leverages a robust data model with five key objects, ensuring interconnectedness and data integrity.</p>
+        <div class="schema-diagram-container">
+            <img src="Schema Relationship.PNG" alt="Schema Relationship Diagram">
+        </div>
+        <p class="mt-6">Note: This diagram is a conceptual representation. Actual schema may include more fields and relationships.</p>
+
+        <h2 class="text-2xl font-semibold text-gray-800 mt-8 mb-4">Custom Object Wireframes (Record Pages)</h2>
+        <p class="mb-6">These mockups illustrate the design of the custom object record pages within Salesforce Lightning Experience, showcasing key fields and related lists for each object in the job target solution.</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Account Object Wireframe -->
+            <div class="object-record-card">
+                <h3>1. Account Object (Parent Object - Client Record)</h3>
+                <p>The existing Account object houses client records, now enhanced with fields relevant to job target capture and service needs.</p>
+                <div class="sf-record-page">
+                    <div class="sf-header">
+                        <div class="sf-header-icon">A</div>
+                        <div class="sf-header-title">Account: Client Name</div>
+                    </div>
+                    <div class="sf-actions">
+                        <button class="sf-button">Edit</button>
+                        <button class="sf-button">New Client Job Target</button>
+                    </div>
+                    <div class="sf-body">
+                        <div class="sf-field-group">
+                            <div class="sf-field-label">Name</div>
+                            <div class="sf-field-value">Client A</div>
+                        </div>
+                        <div class="sf-field-group">
+                            <div class="sf-field-label">Email</div>
+                            <div class="sf-field-value">client.a@example.com</div>
+                        </div>
+                        <div class="sf-field-group">
+                            <div class="sf-field-label">Phone</div>
+                            <div class="sf-field-value">(123) 456-7890</div>
+                        </div>
+                        <div class="sf-field-group">
+                            <div class="sf-field-label">Age</div>
+                            <div class="sf-field-value">32</div>
+                        </div>
+                        <div class="sf-field-group">
+                            <div class="sf-field-label">Preferred Language</div>
+                            <div class="sf-field-value">English</div>
+                        </div>
+                        <div class="sf-field-group">
+                            <div class="sf-field-label">Desired Services</div>
+                            <div class="sf-field-value">Career Planning, Job Search Assistance</div>
+                        </div>
+                    </div>
+                    <div class="sf-related-list">
+                        <h4 class="sf-related-list-title">Related: Client Job Targets</h4>
+                        <p class="text-sm text-gray-500">List of associated Client Job Target records will appear here.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Job Target Object Wireframe -->
+            <div class="object-record-card">
+                <h3>2. Job Target Object (Master Data - NOC Codes)</h3>
+                <p>This object stores the standardized NOC codes and their details, serving as the lookup source for client job targets.</p>
+                <div class="sf-record-page">
+                    <div class="sf-header">
+                        <div class="sf-header-icon">JT</div>
+                        <div class="sf-header-title">Job Target: Software Developer</div>
+                    </div>
+                    <div class="sf-actions">
+                        <button class="sf-button">Edit</button>
+                    </div>
+                    <div class="sf-body">
+                        <div class="sf-field-group">
+                            <div class="sf-field-label">Job Target Name</div>
+                            <div class="sf-field-value">Software Developer</div>
+                        </div>
+                        <div class="sf-field-group">
+                            <div class="sf-field-label">NOC Code</div>
+                            <div class="sf-field-value">2174</div>
+                        </div>
+                        <div class="sf-field-group">
+                            <div class="sf-field-label">Teer/Skill Level</div>
+                            <div class="sf-field-value">1 (University Degree)</div>
+                        </div>
+                        <div class="sf-field-group">
+                            <div class="sf-field-label">Help Text</div>
+                            <div class="sf-field-value">Develop, modify, integrate and implement computer software...</div>
+                        </div>
+                    </div>
+                    <div class="sf-related-list">
+                        <h4 class="sf-related-list-title">Related: Client Job Targets</h4>
+                        <p class="text-sm text-gray-500">List of clients who desire this job target will appear here.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Client Job Target Object Wireframe -->
+            <div class="object-record-card">
+                <h3>3. Client Job Target Object (Client-Specific Job Goals)</h3>
+                <p>This object tracks individual client's desired job targets, linking them to the master NOC codes and client accounts.</p>
+                <div class="sf-record-page">
+                    <div class="sf-header">
+                        <div class="sf-header-icon">CJT</div>
+                        <div class="sf-header-title">Client Job Target: CJT-0001</div>
+                    </div>
+                    <div class="sf-actions">
+                        <button class="sf-button">Edit</button>
+                        <button class="sf-button">Mark Secured</button>
+                    </div>
+                    <div class="sf-body">
+                        <div class="sf-field-group">
+                            <div class="sf-field-label">SE Number</div>
+                            <div class="sf-field-value">CJT-0001</div>
+                        </div>
+                        <div class="sf-field-group">
+                            <div class="sf-field-label">Job Target</div>
+                            <div class="sf-field-value">Software Developer (2174)</div>
+                        </div>
+                        <div class="sf-field-group">
+                            <div class="sf-field-label">Client</div>
+                            <div class="sf-field-value">Client A</div>
+                        </div>
+                        <div class="sf-field-group">
+                            <div class="sf-field-label">Status</div>
+                            <div class="sf-field-value">Active</div>
+                        </div>
+                        <div class="sf-field-group">
+                            <div class="sf-field-label">For Assessment</div>
+                            <div class="sf-field-value">True</div>
+                        </div>
+                        <div class="sf-field-group">
+                            <div class="sf-field-label">Closure Date</div>
+                            <div class="sf-field-value">--</div>
+                        </div>
+                        <div class="sf-field-group">
+                            <div class="sf-field-label">Closure Reason</div>
+                            <div class="sf-field-value">--</div>
+                        </div>
+                    </div>
+                    <div class="sf-related-list">
+                        <h4 class="sf-related-list-title">Related: Placements</h4>
+                        <p class="text-sm text-gray-500">List of associated Placement records will appear here.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Job Posting Object Wireframe -->
+            <div class="object-record-card">
+                <h3>4. Job Posting Object (Employer Job Openings)</h3>
+                <p>Records job openings from partner employers, matching them to relevant job targets and client needs.</p>
+                <div class="sf-record-page">
+                    <div class="sf-header">
+                        <div class="sf-header-icon">JP</div>
+                        <div class="sf-header-title">Job Posting: Senior Dev at TechCorp</div>
+                    </div>
+                    <div class="sf-actions">
+                        <button class="sf-button">Edit</button>
+                    </div>
+                    <div class="sf-body">
+                        <div class="sf-field-group">
+                            <div class="sf-field-label">Job Opening Name</div>
+                            <div class="sf-field-value">Senior Software Developer</div>
+                        </div>
+                        <div class="sf-field-group">
+                            <div class="sf-field-label">Job Target</div>
+                            <div class="sf-field-value">Software Developer (2174)</div>
+                        </div>
+                        <div class="sf-field-group">
+                            <div class="sf-field-label">Company</div>
+                            <div class="sf-field-value">TechCorp Inc.</div>
+                        </div>
+                        <div class="sf-field-group">
+                            <div class="sf-field-label">Hourly Rate</div>
+                            <div class="sf-field-value">$45.00</div>
+                        </div>
+                        <div class="sf-field-group">
+                            <div class="sf-field-label">Employment Type</div>
+                            <div class="sf-field-value">Competitive</div>
+                        </div>
+                        <div class="sf-field-group">
+                            <div class="sf-field-label">Type</div>
+                            <div class="sf-field-value">Permanent</div>
+                        </div>
+                        <div class="sf-field-group">
+                            <div class="sf-field-label">Posting Status</div>
+                            <div class="sf-field-value">Active</div>
+                        </div>
+                        <div class="sf-field-group">
+                            <div class="sf-field-label">Job Requirement</div>
+                            <div class="sf-field-value">5+ years experience in Java, SQL, Agile.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Placement Object Wireframe -->
+            <div class="object-record-card">
+                <h3>5. Placement Object (Successful Employment Record)</h3>
+                <p>Captures details of successful client employment, linking back to the client and their specific job target.</p>
+                <div class="sf-record-page">
+                    <div class="sf-header">
+                        <div class="sf-header-icon">P</div>
+                        <div class="sf-header-title">Placement: PL-0001</div>
+                    </div>
+                    <div class="sf-actions">
+                        <button class="sf-button">Edit</button>
+                    </div>
+                    <div class="sf-body">
+                        <div class="sf-field-group">
+                            <div class="sf-field-label">EE Number</div>
+                            <div class="sf-field-value">PL-0001</div>
+                        </div>
+                        <div class="sf-field-group">
+                            <div class="sf-field-label">Client</div>
+                            <div class="sf-field-value">Client A</div>
+                        </div>
+                        <div class="sf-field-group">
+                            <div class="sf-field-label">Start Date</div>
+                            <div class="sf-field-value">2024-07-01</div>
+                        </div>
+                        <div class="sf-field-group">
+                            <div class="sf-field-label">Client Job Target</div>
+                            <div class="sf-field-value">CJT-0001 (Software Developer)</div>
+                        </div>
+                        <div class="sf-field-group">
+                            <div class="sf-field-label">Company</div>
+                            <div class="sf-field-value">TechCorp Inc.</div>
+                        </div>
+                        <div class="sf-field-group">
+                            <div class="sf-field-label">Opening Note</div>
+                            <div class="sf-field-value">Client successfully placed after 3 months of job search.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="text-2xl font-semibold text-gray-800 mt-8 mb-4">Dashboard Mockups</h2>
+        <p class="mb-6">These mockups illustrate key dashboards providing actionable insights for various stakeholders.</p>
+      <p> 
+    
+</p>
+
+        <!-- Dashboard 1: Job Target vs. Placement Success Dashboard (Senior Management) -->
+        <div class="dashboard-mockup">
+            <h3 class="text-2xl font-bold text-gray-800 mb-4">Job Target vs. Placement Success Dashboard</h3>
+            <p class="text-sm text-gray-600 mb-6">For Senior Management (Strategic Oversight & Funding Impact)</p>
+
+            <div class="sf-dashboard-grid">
+                <div class="sf-dashboard-widget">
+                    <h4>Desired Job Placement Rate</h4>
+                    <div class="gauge-chart" style="--percentage: 75%;"><span>75%</span></div>
+                    <p>Overall success in matching clients to desired roles.</p>
+                </div>
+                <div class="sf-dashboard-widget">
+                    <h4>Funder Reporting Compliance</h4>
+                    <div class="gauge-chart" style="--percentage: 98%;"><span>98%</span></div>
+                    <p>Assessment records with primary job target selected.</p>
+                </div>
+                <div class="sf-dashboard-widget">
+                    <h4>Total Placements</h4>
+                    <div class="metric-value">1,245</div>
+                    <p>Year-to-date successful job placements.</p>
+                </div>
+                <div class="sf-dashboard-widget col-span-full sm:col-span-1 lg:col-span-2">
+                    <h4>Client Desired Job Target Trends (Top 10)</h4>
+                    <div class="chart-placeholder">Bar Chart: Top NOC Codes desired by clients</div>
+                </div>
+                <div class="sf-dashboard-widget col-span-full sm:col-span-1 lg:col-span-1">
+                    <h4>Placement Rate by Desired Job Target (NOC)</h4>
+                    <div class="chart-placeholder">Stacked Bar Chart: Achieved vs. Alternative Placements by NOC</div>
+                </div>
+            </div>
+        </div>
+      <p> 
+    
+</p>
+
+        <!-- Dashboard 2: Program Efficiency & ROI Dashboard (Senior Management) -->
+        <div class="dashboard-mockup">
+            <h3 class="text-2xl font-bold text-gray-800 mb-4">Program Efficiency & ROI Dashboard</h3>
+            <p class="text-sm text-gray-600 mb-6">For Senior Management (Operational Improvements & Investment Justification)</p>
+
+            <div class="sf-dashboard-grid">
+                <div class="sf-dashboard-widget">
+                    <h4>Invoicing Workflow Optimization</h4>
+                    <div class="metric-value">37%</div>
+                    <p>Efficiency gain from automation.</p>
+                </div>
+                <div class="sf-dashboard-widget">
+                    <h4>Data Accuracy Improvement</h4>
+                    <div class="metric-value">42%</div>
+                    <p>In invoicing data accuracy.</p>
+                </div>
+                <div class="sf-dashboard-widget">
+                    <h4>Admin Effort Reduction (Placement)</h4>
+                    <div class="metric-value">73%</div>
+                    <p>Reduction in placement administrative effort.</p>
+                </div>
+                <div class="sf-dashboard-widget col-span-full sm:col-span-1 lg:col-span-2">
+                    <h4>Client Placement Rate by Initiative</h4>
+                    <div class="chart-placeholder">Bar Chart: Success rates across different employability initiatives</div>
+                </div>
+                <div class="sf-dashboard-widget col-span-full sm:col-span-1 lg:col-span-1">
+                    <h4>Operational Cost Reduction (Simulated)</h4>
+                    <div class="chart-placeholder">Line Chart: Simulated cost savings over time due to automation</div>
+                </div>
+            </div>
+        </div>
+      <p> 
+    
+</p>
+
+        <!-- Dashboard 3: Active Client Job Target & Job Posting Match Dashboard (Program Teams) -->
+        <div class="dashboard-mockup">
+            <h3 class="text-2xl font-bold text-gray-800 mb-4">Active Client Job Target & Job Posting Match Dashboard</h3>
+            <p class="text-sm text-gray-600 mb-6">For Program Teams (Operational Effectiveness & Client Focus)</p>
+
+            <div class="sf-dashboard-grid">
+                <div class="sf-dashboard-widget col-span-full sm:col-span-1">
+                    <h4>Clients Awaiting Placement</h4>
+                    <ul class="list-disc list-inside text-left text-gray-700 mt-2 w-full">
+                        <li>Client A - NOC 1234 (Active)</li>
+                        <li>Client B - NOC 5678 (Active)</li>
+                        <li>Client C - NOC 9012 (Active)</li>
+                        <li>Client D - NOC 3456 (Active)</li>
+                    </ul>
+                    <p class="text-sm text-gray-600 mt-2">List of active client job targets ready for placement.</p>
+                </div>
+                <div class="sf-dashboard-widget col-span-full sm:col-span-1 lg:col-span-2">
+                    <h4>Matching Job Postings by NOC Code</h4>
+                    <div class="chart-placeholder">Bar Chart: Available job postings by matching NOC code</div>
+                </div>
+                <div class="sf-dashboard-widget col-span-full">
+                    <h4>Time to Match (Client Job Target to Job Posting)</h4>
+                    <div class="metric-value">7 Days</div>
+                    <p>Average time to match an active job target with a posting.</p>
+                </div>
+            </div>
+        </div>
+      <p> 
+    
+</p>
+
+        <!-- Dashboard 4: Client Progress & Service Engagement Dashboard (Program Teams) -->
+        <div class="dashboard-mockup">
+            <h3 class="text-2xl font-bold text-gray-800 mb-4">Client Progress & Service Engagement Dashboard</h3>
+            <p class="text-sm text-gray-600 mb-6">For Program Teams (Holistic Client View & Training Effectiveness)</p>
+
+            <div class="sf-dashboard-grid">
+                <div class="sf-dashboard-widget col-span-full sm:col-span-1">
+                    <h4>Client Journey Progress</h4>
+                    <div class="chart-placeholder">Funnel Chart: Clients in Assessment, Training, Placement, Placed stages</div>
+                </div>
+                <div class="sf-dashboard-widget col-span-full sm:col-span-1">
+                    <h4>Job Target Activity Log</h4>
+                    <div class="chart-placeholder">Line Chart: Trend of job target status changes over time</div>
+                </div>
+                <div class="sf-dashboard-widget">
+                    <h4>System Adoption Rate</h4>
+                    <div class="metric-value">43% Increase</div>
+                    <p>Increase in adoption for new communications.</p>
+                </div>
+                <div class="sf-dashboard-widget">
+                    <h4>User Error Reduction (Simulated)</h4>
+                    <div class="metric-value">25% Decrease</div>
+                    <p>Simulated decrease in user errors due to improved processes.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
