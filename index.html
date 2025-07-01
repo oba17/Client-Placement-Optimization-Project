@@ -321,39 +321,21 @@
         </div>
 
         <h2 class="text-2xl font-semibold text-gray-800 mt-8 mb-4">Business Need Summary</h2>
-        <p>Our organization faced significant data quality issues that hindered core service delivery and critical reporting. The existing process for capturing clients' desired job targets was inconsistent and inaccurate, leading to a disconnect between client aspirations and actual job placement outcomes. This directly impacted our ability to strategically position clients for relevant employment opportunities through our employability initiatives.</p>
-        
-        <p>A critical consequence was our inability to accurately demonstrate the impact of services to government and private funders. Funders require robust metrics to validate that their contributions effectively assist clients in securing desired employment. Without reliable data on desired job targets versus actual job placements, we could not definitively show whether clients were securing roles aligned with their original goals, even when placements occurred. This inaccuracy threatened continued funding and our credibility in achieving our mission.</p>
+        <div class="text-lg leading-relaxed space-y-6">
+            <p>Our organization faced significant data quality issues that hindered core service delivery and critical reporting. The existing process for capturing clients' desired job targets was inconsistent and inaccurate, leading to a disconnect between client aspirations and actual job placement outcomes. This directly impacted our ability to strategically position clients for relevant employment opportunities through our employability initiatives.</p>
+            <p>A critical consequence was our inability to accurately demonstrate the impact of services to government and private funders. Funders require robust metrics to validate that their contributions effectively assist clients in securing desired employment. Without reliable data on desired job targets versus actual job placements, we could not definitively show whether clients were securing roles aligned with their original goals, even when placements occurred. This inaccuracy threatened continued funding and our credibility in achieving our mission.</p>
+        </div>
 
         <h2 class="text-2xl font-semibold text-gray-800 mt-8 mb-4">Solution Design Summary: Making Job Targets Clear and Actionable</h2>
         <p>We transformed how we record client job desires, making it much more precise and useful:</p>
-        <ul class="list-disc list-inside space-y-2">
+        <ul class="list-disc list-inside space-y-4">
             <li><strong>Standardizing Job Targets:</strong> To eliminate errors from free-form text entries, we adopted Canada’s National Occupational Classification (NOC) codes as the standard “job target” list. This comprehensive, government-recognized list was cleaned and organized to fit our needs, then uploaded into a dedicated 'Job Target' custom object in Salesforce. Staff now select from a curated dropdown of NOC classifications, ensuring consistency and alignment with reporting requirements.</li>
-            <p>
-                
-            </p>
             <li><strong>Dedicated Client Job Target Records:</strong> We replaced old text boxes with new "Client Job Target" records. Each time a client identifies a desired job, a specific record is created to track details like when the target was set, its active status, whether the client secured that job, or if goals changed. This significantly improves tracking and reporting.</li>
-            <p>
-                
-            </p>
             <li><strong>Quickly Adding Multiple Job Targets:</strong> Recognizing clients often have multiple interests, we designed a quick way for staff to select and add multiple desired job targets at once directly from our 'Job Target' list using a simple on-screen wizard in Salesforce. This guide walks staff through choosing relevant job categories and flags one primary target for external reporting, ensuring contractual commitments are met and enabling more efficient data entry.</li>
-            <p>
-                
-            </p>
             <li><strong>Connecting Goals to Assessments and Funding:</strong> When a client’s job targets are finalized during their initial assessment, the system ensures the primary job target (for funder reporting) is clearly linked to their assessment record, meeting all contractual reporting requirements.</li>
-            <p>
-                
-            </p>
             <li><strong>Seamless Handoff to Placement Team:</strong> Employment Specialists can instantly see all active job targets for a client, creating a smooth transition and ensuring efforts focus on matching client aspirations. This boosts placement accuracy and cuts administrative effort by over 73%.</li>
-            <p>
-                
-            </p>
             <li><strong>Real-Time Job Openings:</strong> We created a 'Job Posting' object for our Employment Services Team to record job openings from employer partners. The new system helps specialists quickly see which active client job targets have matching active job openings, making the placement process much more efficient and reducing previous long processes by over 62%.</li>
-            <p>
-                
-            </p>
         </ul>
-        
         <p>Behind the scenes, this solution is powered by smart automation like intuitive Screen Flows and modern display features such as Lightning Record Pages to simplify processes for users, while clever data connections (formula fields, Master-detail and Lookup relationships) and built-in checks ensure data consistency, real-time reporting, and seamless integration with existing workflows.</p>
 
         <h2 class="text-2xl font-semibold text-gray-800 mt-8 mb-4">Automation Summary: Screen Flow</h2>
@@ -379,15 +361,13 @@
             </div>
 
         </div>
-        <p class="mt-6">Note: The provided images are placeholders to illustrate the concept of Screen Flows. Actual flow diagrams would be more detailed.</p>
-
+        
         <h2 class="text-2xl font-semibold text-gray-800 mt-8 mb-4">Schema Relationship Diagram</h2>
         <p class="mb-6">The solution leverages a robust data model with five key objects, ensuring interconnectedness and data integrity.</p>
         <div class="schema-diagram-container">
             <img src="Schema Relationship.PNG" alt="Schema Relationship Diagram">
         </div>
-        <p class="mt-6">Note: This diagram is a conceptual representation. Actual schema may include more fields and relationships.</p>
-
+        
         <h2 class="text-2xl font-semibold text-gray-800 mt-8 mb-4">Custom Object Wireframes (Record Pages)</h2>
         <p class="mb-6">These mockups illustrate the design of the custom object record pages within Salesforce Lightning Experience, showcasing key fields and related lists for each object in the job target solution.</p>
 
@@ -620,7 +600,7 @@
         <p class="mb-6">These mockups illustrate key dashboards providing actionable insights for various stakeholders.</p>
 
         <!-- Dashboard 1: Job Target vs. Placement Success Dashboard (Senior Management) -->
-        <div class="dashboard-mockup">
+        <div class="dashboard-mockup mb-12">
             <h3 class="text-2xl font-bold text-gray-800 mb-4">Job Target vs. Placement Success Dashboard</h3>
             <p class="text-sm text-gray-600 mb-6">For Senior Management (Strategic Oversight & Funding Impact)</p>
 
@@ -650,12 +630,9 @@
                 </div>
             </div>
         </div>
-        <p>
-            
-        </p>
 
         <!-- Dashboard 2: Program Efficiency & ROI Dashboard (Senior Management) -->
-        <div class="dashboard-mockup">
+        <div class="dashboard-mockup mb-12">
             <h3 class="text-2xl font-bold text-gray-800 mb-4">Program Efficiency & ROI Dashboard</h3>
             <p class="text-sm text-gray-600 mb-6">For Senior Management (Operational Improvements & Investment Justification)</p>
 
@@ -685,12 +662,9 @@
                 </div>
             </div>
         </div>
-        <p>
-            
-        </p>
 
         <!-- Dashboard 3: Active Client Job Target & Job Posting Match Dashboard (Program Teams) -->
-        <div class="dashboard-mockup">
+        <div class="dashboard-mockup mb-12">
             <h3 class="text-2xl font-bold text-gray-800 mb-4">Active Client Job Target & Job Posting Match Dashboard</h3>
             <p class="text-sm text-gray-600 mb-6">For Program Teams (Operational Effectiveness & Client Focus)</p>
 
@@ -716,12 +690,9 @@
                 </div>
             </div>
         </div>
-        <p>
-            
-        </p>
 
         <!-- Dashboard 4: Client Progress & Service Engagement Dashboard (Program Teams) -->
-        <div class="dashboard-mockup">
+        <div class="dashboard-mockup mb-12">
             <h3 class="text-2xl font-bold text-gray-800 mb-4">Client Progress & Service Engagement Dashboard</h3>
             <p class="text-sm text-gray-600 mb-6">For Program Teams (Holistic Client View & Training Effectiveness)</p>
 
